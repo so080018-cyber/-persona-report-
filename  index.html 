@@ -1,359 +1,368 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-<meta charset="UTF-8">
-<title>人物分析レポート - 聖史様</title>
-<style>
-  /* 印刷・画面共通基本設定 */
-  @page {
-    size: A4 portrait;
-    margin: 0;
-  }
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-  body {
-    width: 210mm;
-    height: 297mm;
-    font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    background-color: #f4f6f9;
-    color: #222;
-    padding: 12mm;
-    margin: 0 auto;
-    line-height: 1.35;
-    font-size: 8.5pt;
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persona Analysis Report - Kiyoshi</title>
+  <style>
+    /* ベース設定（レスポンシブ ＆ 印刷対応） */
+    :root {
+      --navy-main: #0B1D3A;
+      --navy-light: #1A365D;
+      --gold-accent: #C5A059;
+      --gold-light: #F4E8D1;
+      --bg-card: #FFFFFF;
+      --text-muted: #555555;
+      --border-color: #E2E8F0;
+    }
 
-  /* カラー定義 */
-  :root {
-    --navy-main: #0B1D3A;
-    --navy-light: #1A365D;
-    --gold-accent: #C5A059;
-    --gold-light: #F4E8D1;
-    --bg-card: #FFFFFF;
-    --text-muted: #555555;
-    --border-color: #E2E8F0;
-  }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-  /* ヘッダー */
-  header {
-    background: linear-gradient(135deg, var(--navy-main), var(--navy-light));
-    color: #FFF;
-    padding: 10px 16px;
-    border-radius: 6px;
-    border-bottom: 3px solid var(--gold-accent);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  header h1 {
-    font-size: 14pt;
-    letter-spacing: 1px;
-    font-weight: 700;
-  }
-  header h1 span {
-    color: var(--gold-accent);
-    font-size: 10pt;
-    margin-left: 8px;
-    font-weight: 400;
-  }
-  header .meta {
-    font-size: 7.5pt;
-    text-align: right;
-    color: #CBD5E1;
-  }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background-color: #0f172a; /* GitHubのダークモードになじむ背景色 */
+      color: #222;
+      padding: 20px 10px;
+      line-height: 1.4;
+    }
 
-  /* メインレイアウト */
-  .grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-  }
-  .full-width {
-    grid-column: span 2;
-  }
+    /* A4縦サイズコンテナ */
+    .container {
+      max-width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background-color: #f8fafc;
+      padding: 12mm;
+      border-radius: 8px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
 
-  /* カード・ボックス共通 */
-  .card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 8px 12px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-    position: relative;
-  }
-  .card-header {
-    display: flex;
-    align-items: center;
-    border-bottom: 2px solid var(--gold-accent);
-    padding-bottom: 3px;
-    margin-bottom: 6px;
-  }
-  .card-icon {
-    background: var(--navy-main);
-    color: var(--gold-accent);
-    width: 18px;
-    height: 18px;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 8pt;
-    font-weight: bold;
-    margin-right: 6px;
-  }
-  .card-title {
-    font-size: 9.5pt;
-    font-weight: bold;
-    color: var(--navy-main);
-  }
+    /* ヘッダー */
+    header {
+      background: linear-gradient(135deg, var(--navy-main), var(--navy-light));
+      color: #FFF;
+      padding: 12px 18px;
+      border-radius: 6px;
+      border-bottom: 3px solid var(--gold-accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
 
-  /* 要約セクション */
-  .summary-text {
-    font-size: 8.5pt;
-    color: #333;
-    line-height: 1.4;
-  }
+    header h1 {
+      font-size: 15pt;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
 
-  /* ランキングリスト */
-  .rank-list {
-    list-style: none;
-  }
-  .rank-item {
-    display: flex;
-    align-items: flex-start;
-    margin-bottom: 4px;
-    font-size: 8pt;
-  }
-  .rank-num {
-    background: var(--gold-accent);
-    color: #FFF;
-    font-size: 7pt;
-    font-weight: bold;
-    width: 15px;
-    height: 15px;
-    border-radius: 3px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 6px;
-    flex-shrink: 0;
-    margin-top: 1px;
-  }
-  .rank-text strong {
-    color: var(--navy-main);
-  }
+    header h1 span {
+      color: var(--gold-accent);
+      font-size: 10pt;
+      margin-left: 8px;
+      font-weight: 400;
+    }
 
-  /* タグ風スタイル */
-  .tag-group {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    margin-top: 4px;
-  }
-  .tag {
-    background: var(--gold-light);
-    color: var(--navy-main);
-    border: 1px solid var(--gold-accent);
-    font-size: 7.5pt;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-weight: 600;
-  }
+    header .meta {
+      font-size: 8pt;
+      text-align: right;
+      color: #CBD5E1;
+    }
 
-  /* キャッチコピーリスト */
-  .copy-list {
-    list-style: none;
-  }
-  .copy-item {
-    background: #F8FAFC;
-    border-left: 3px solid var(--navy-main);
-    padding: 3px 8px;
-    margin-bottom: 3px;
-    font-size: 8pt;
-    font-weight: 600;
-    color: var(--navy-main);
-  }
+    /* Grid Layout */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
 
-  /* リスト補助 */
-  ul.bullet-list {
-    padding-left: 12px;
-    font-size: 8pt;
-  }
-  ul.bullet-list li {
-    margin-bottom: 3px;
-  }
+    .full-width {
+      grid-column: span 2;
+    }
 
-  /* 注記 */
-  .disclaimer {
-    margin-top: 6px;
-    font-size: 7pt;
-    color: var(--text-muted);
-    text-align: right;
-  }
-</style>
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 10px 14px;
+      position: relative;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      border-bottom: 2px solid var(--gold-accent);
+      padding-bottom: 4px;
+      margin-bottom: 8px;
+    }
+
+    .card-icon {
+      background: var(--navy-main);
+      color: var(--gold-accent);
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8.5pt;
+      font-weight: bold;
+      margin-right: 8px;
+    }
+
+    .card-title {
+      font-size: 10pt;
+      font-weight: bold;
+      color: var(--navy-main);
+    }
+
+    .summary-text {
+      font-size: 8.5pt;
+      color: #333;
+      line-height: 1.45;
+    }
+
+    /* Ranking List */
+    .rank-list {
+      list-style: none;
+    }
+
+    .rank-item {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 5px;
+      font-size: 8pt;
+    }
+
+    .rank-num {
+      background: var(--gold-accent);
+      color: #FFF;
+      font-size: 7.5pt;
+      font-weight: bold;
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 6px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .rank-text strong {
+      color: var(--navy-main);
+    }
+
+    /* Tags */
+    .tag-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .tag {
+      background: var(--gold-light);
+      color: var(--navy-main);
+      border: 1px solid var(--gold-accent);
+      font-size: 7.5pt;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-weight: 600;
+    }
+
+    /* Copy List */
+    .copy-list {
+      list-style: none;
+    }
+
+    .copy-item {
+      background: #F8FAFC;
+      border-left: 3px solid var(--navy-main);
+      padding: 4px 8px;
+      margin-bottom: 4px;
+      font-size: 8pt;
+      font-weight: 600;
+      color: var(--navy-main);
+    }
+
+    ul.bullet-list {
+      padding-left: 14px;
+      font-size: 8pt;
+    }
+
+    ul.bullet-list li {
+      margin-bottom: 4px;
+    }
+
+    .disclaimer {
+      margin-top: 8px;
+      font-size: 7pt;
+      color: var(--text-muted);
+      text-align: right;
+    }
+
+    /* モバイル表示への自動調整 */
+    @media (max-width: 768px) {
+      .container {
+        padding: 10px;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .full-width {
+        grid-column: span 1;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+      }
+    }
+
+    /* 印刷/PDF変換用メディアクエリ */
+    @media print {
+      body {
+        background-color: #FFF;
+        padding: 0;
+      }
+      .container {
+        max-width: none;
+        box-shadow: none;
+        border-radius: 0;
+        padding: 10mm;
+      }
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+    }
+  </style>
 </head>
 <body>
 
-  <!-- ヘッダー -->
-  <header>
-    <h1>PERSONA ANALYSIS <span>人物分析レポート</span></h1>
-    <div class="meta">
-      対象者: 聖史（きよし）様<br>
-      形式: コンサルティング・プロフィール診断
-    </div>
-  </header>
-
-  <div class="grid">
-
-    <!-- 1. 人物像の要約 -->
-    <div class="card full-width">
-      <div class="card-header">
-        <span class="card-icon">1</span>
-        <span class="card-title">人物像の要約</span>
+  <div class="container">
+    <header>
+      <h1>PERSONA ANALYSIS <span>人物分析レポート</span></h1>
+      <div class="meta">
+        対象者: 聖史（きよし）様<br>
+        形式: コンサルティング・プロフィール診断
       </div>
-      <p class="summary-text">
-        <strong>論理的・構造的思考を持つ「実践型ファシリテーター」</strong><br>
-        寸法や数値データを正確に把握・管理する緻密さ（生活インフラ・環境管理等）を備えつつ、日常生活の課題に対してもロジカルかつ現実的な最適解を追求。余計な比喩や文脈に合わない脱線を排し、本質的・効率的なコミュニケーションを好む性格構造を持つ。
-      </p>
-    </div>
+    </header>
 
-    <!-- 2. 強み TOP5 -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">2</span>
-        <span class="card-title">強み TOP5</span>
-      </div>
-      <ol class="rank-list">
-        <li class="rank-item">
-          <span class="rank-num">1</span>
-          <div class="rank-text"><strong>精密な情報管理力</strong>: 寸法・仕様などを正確に記録・管理</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">2</span>
-          <div class="rank-text"><strong>空間・構造認識力</strong>: 客観的数値に基づく正確な判断</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">3</span>
-          <div class="rank-text"><strong>無駄を省く本質思考</strong>: 不要な装飾や脱線を抑止</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">4</span>
-          <div class="rank-text"><strong>計画的実行力</strong>: 前提条件を整えて着実に推進</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">5</span>
-          <div class="rank-text"><strong>現実的ソリューション志向</strong>: 再現性の高い解決策を重視</div>
-        </li>
-      </ol>
-    </div>
-
-    <!-- 3. 弱み・盲点 TOP5 -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">3</span>
-        <span class="card-title">弱み・盲点 TOP5</span>
-      </div>
-      <ol class="rank-list">
-        <li class="rank-item">
-          <span class="rank-num">1</span>
-          <div class="rank-text"><strong>曖昧さへの耐性の低さ</strong>: 厳密でない表現にストレス</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">2</span>
-          <div class="rank-text"><strong>前提条件への拘り</strong>: 仕様変更への躊躇（推測）</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">3</span>
-          <div class="rank-text"><strong>効率重視による余白削減</strong>: 遊び心や偶然の排除</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">4</span>
-          <div class="rank-text"><strong>単独完結型の思考癖</strong>: 他者への委ねが遅れがち</div>
-        </li>
-        <li class="rank-item">
-          <span class="rank-num">5</span>
-          <div class="rank-text"><strong>過度な最適化疲労</strong>: 全てを統制しようとする負荷（推測）</div>
-        </li>
-      </ol>
-    </div>
-
-    <!-- 4. 価値観・モチベーション -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">4</span>
-        <span class="card-title">価値観・モチベーション</span>
-      </div>
-      <p style="font-size: 7.5pt; font-weight: bold; color: var(--navy-main); margin-bottom: 3px;">コア価値観キーワード</p>
-      <div class="tag-group">
-        <span class="tag">再現性</span>
-        <span class="tag">正確性</span>
-        <span class="tag">無駄の排除</span>
-        <span class="tag">機能的美しさ</span>
-      </div>
-      <p style="font-size: 7.5pt; font-weight: bold; color: var(--navy-main); margin-top: 6px; margin-bottom: 2px;">モチベーション源</p>
-      <p style="font-size: 7.5pt; color: #444;">不確定要素が明確な数値・構造として整理され、システムとしてスムーズに機能すること。</p>
-    </div>
-
-    <!-- 5. 思考パターンの特徴 -->
-    <div class="card">
-      <div class="card-header">
-        <span class="card-icon">5</span>
-        <span class="card-title">思考パターンの特徴</span>
-      </div>
-      <ul class="bullet-list">
-        <li><strong>データファースト:</strong> 感情論ではなく「事実と数値」から構築。</li>
-        <li><strong>境界線の明確化:</strong> 目的達成に必要な情報と不要な情報を厳格に分離。</li>
-        <li><strong>タスクの構造化:</strong> 複雑な課題要素（寸法・ルート等）を分解して評価。</li>
-      </ul>
-    </div>
-
-    <!-- 6. 今後伸ばすべき方向性 -->
-    <div class="card full-width">
-      <div class="card-header">
-        <span class="card-icon">6</span>
-        <span class="card-title">今後の推奨シナリオ（成長・最適化の方向性）</span>
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; font-size: 7.5pt;">
-        <div style="background: #F8FAFC; padding: 6px; border-radius: 4px; border-top: 2px solid var(--navy-main);">
-          <strong style="color: var(--navy-main);">① 余白の戦略的導入</strong><br>
-          効率だけでなく、あえて不確定要素や偶然を楽しむ「ゆとり」を計画的に組み込む。
+    <div class="grid">
+      <div class="card full-width">
+        <div class="card-header">
+          <span class="card-icon">1</span>
+          <span class="card-title">人物像の要約</span>
         </div>
-        <div style="background: #F8FAFC; padding: 6px; border-radius: 4px; border-top: 2px solid var(--navy-main);">
-          <strong style="color: var(--navy-main);">② ロジックの言語化</strong><br>
-          高い情報整理技術をフレームワーク化し、周囲・家族へ分かりやすく展開する。
+        <p class="summary-text">
+          <strong>論理的・構造的思考を持つ「実践型ファシリテーター」</strong><br>
+          寸法や数値データを正確に把握・管理する緻密さを備えつつ、日常生活の課題に対してもロジカルかつ現実的な最適解を追求。余計な比喩や脱線を排し、本質的・効率的なコミュニケーションを好む性格構造を持つ。
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">2</span>
+          <span class="card-title">強み TOP5</span>
         </div>
-        <div style="background: #F8FAFC; padding: 6px; border-radius: 4px; border-top: 2px solid var(--navy-main);">
-          <strong style="color: var(--navy-main);">③ 長期構想への応用</strong><br>
-          目前の構造化・配置管理に加え、中長期的なライフプラン最適化へデータを活かす。
+        <ol class="rank-list">
+          <li class="rank-item"><span class="rank-num">1</span><div class="rank-text"><strong>精密な情報管理力</strong>: 寸法・仕様などを正確に記録・管理</div></li>
+          <li class="rank-item"><span class="rank-num">2</span><div class="rank-text"><strong>空間・構造認識力</strong>: 客観的数値に基づく正確な判断</div></li>
+          <li class="rank-item"><span class="rank-num">3</span><div class="rank-text"><strong>無駄を省く本質思考</strong>: 不要な装飾や脱線を抑止</div></li>
+          <li class="rank-item"><span class="rank-num">4</span><div class="rank-text"><strong>計画的実行力</strong>: 前提条件を整えて着実に推進</div></li>
+          <li class="rank-item"><span class="rank-num">5</span><div class="rank-text"><strong>現実的ソリューション志向</strong>: 再現性の高い解決策を重視</div></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">3</span>
+          <span class="card-title">弱み・盲点 TOP5</span>
+        </div>
+        <ol class="rank-list">
+          <li class="rank-item"><span class="rank-num">1</span><div class="rank-text"><strong>曖昧さへの耐性の低さ</strong>: 厳密でない表現にストレス</div></li>
+          <li class="rank-item"><span class="rank-num">2</span><div class="rank-text"><strong>前提条件への拘り</strong>: 仕様変更への躊躇（推測）</div></li>
+          <li class="rank-item"><span class="rank-num">3</span><div class="rank-text"><strong>効率重視による余白削減</strong>: 遊び心や偶然の排除</div></li>
+          <li class="rank-item"><span class="rank-num">4</span><div class="rank-text"><strong>単独完結型の思考癖</strong>: 他者への委ねが遅れがち</div></li>
+          <li class="rank-item"><span class="rank-num">5</span><div class="rank-text"><strong>過度な最適化疲労</strong>: 全てを統制しようとする負荷（推測）</div></li>
+        </ol>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">4</span>
+          <span class="card-title">価値観・モチベーション</span>
+        </div>
+        <p style="font-size: 7.5pt; font-weight: bold; color: var(--navy-main); margin-bottom: 3px;">コア価値観キーワード</p>
+        <div class="tag-group">
+          <span class="tag">再現性</span>
+          <span class="tag">正確性</span>
+          <span class="tag">無駄の排除</span>
+          <span class="tag">機能的美しさ</span>
+        </div>
+        <p style="font-size: 7.5pt; font-weight: bold; color: var(--navy-main); margin-top: 6px; margin-bottom: 2px;">モチベーション源</p>
+        <p style="font-size: 7.5pt; color: #444;">不確定要素が明確な数値・構造として整理され、システムとしてスムーズに機能すること。</p>
+      </div>
+
+      <div class="card">
+        <div class="card-header">
+          <span class="card-icon">5</span>
+          <span class="card-title">思考パターンの特徴</span>
+        </div>
+        <ul class="bullet-list">
+          <li><strong>データファースト:</strong> 感情論ではなく「事実と数値」から構築。</li>
+          <li><strong>境界線の明確化:</strong> 目的達成に必要な情報と不要な情報を厳格に分離。</li>
+          <li><strong>タスクの構造化:</strong> 複雑な課題要素を分解して評価。</li>
+        </ul>
+      </div>
+
+      <div class="card full-width">
+        <div class="card-header">
+          <span class="card-icon">6</span>
+          <span class="card-title">今後の推奨シナリオ（成長・最適化の方向性）</span>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 8px; font-size: 7.5pt;">
+          <div style="background: #F8FAFC; padding: 6px; border-radius: 4px; border-top: 2px solid var(--navy-main);">
+            <strong style="color: var(--navy-main);">① 余白の戦略的導入</strong><br>
+            効率だけでなく、不確定要素を楽しむ「ゆとり」を計画的に組み込む。
+          </div>
+          <div style="background: #F8FAFC; padding: 6px; border-radius: 4px; border-top: 2px solid var(--navy-main);">
+            <strong style="color: var(--navy-main);">② ロジックの言語化</strong><br>
+            高い情報整理技術をフレームワーク化し、周囲へ分かりやすく展開する。
+          </div>
+          <div style="background: #F8FAFC; padding: 6px; border-radius: 4px; border-top: 2px solid var(--navy-main);">
+            <strong style="color: var(--navy-main);">③ 長期構想への応用</strong><br>
+            目前の構造化・配置管理に加え、中長期的なライフプラン最適化へデータを活かす。
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- 7. キャッチコピー5案 -->
-    <div class="card full-width">
-      <div class="card-header">
-        <span class="card-icon">7</span>
-        <span class="card-title">人物を表すキャッチコピー5案</span>
+      <div class="card full-width">
+        <div class="card-header">
+          <span class="card-icon">7</span>
+          <span class="card-title">人物を表すキャッチコピー5案</span>
+        </div>
+        <ul class="copy-list">
+          <li class="copy-item">1. 「ミリ単位で日常を整える、構造思考のリアリスト」</li>
+          <li class="copy-item">2. 「無駄を削ぎ落とし、本質を射抜くデータ・ナビゲーター」</li>
+          <li class="copy-item">3. 「論理と精緻さで、快適な暮らしをビルドする設計者」</li>
+          <li class="copy-item">4. 「ブレない軸と客観的視点を併せ持つ、最適化のスペシャリスト」</li>
+          <li class="copy-item">5. 「静かなる緻密さで、家族の基盤を支えるストラテジスト」</li>
+        </ul>
       </div>
-      <ul class="copy-list">
-        <li class="copy-item">1. 「ミリ単位で日常を整える、構造思考のリアリスト」</li>
-        <li class="copy-item">2. 「無駄を削ぎ落とし、本質を射抜くデータ・ナビゲーター」</li>
-        <li class="copy-item">3. 「論理と精緻さで、快適な暮らしをビルドする設計者」</li>
-        <li class="copy-item">4. 「ブレない軸と客観的視点を併せ持つ、最適化のスペシャリスト」</li>
-        <li class="copy-item">5. 「静かなる緻密さで、家族の基盤を支えるストラテジスト」</li>
-      </ul>
     </div>
 
-  </div>
-
-  <div class="disclaimer">
-    ※本レポートは過去の対話履歴データのみに基づいて作成された分析結果です。（一部項目に推測を含む）
+    <div class="disclaimer">
+      ※本レポートは過去の対話履歴データのみに基づいて作成された分析結果です。（一部項目に推測を含む）
+    </div>
   </div>
 
 </body>
